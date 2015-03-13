@@ -29,13 +29,13 @@ function getUsers() {
 function insertUser() {
   $request = Slim::getInstance()->request();
   $user = json_decode($request->getBody());
-  $sql = "INSERT INTO users (firstName, lastName, email, mobileno) VALUES (:firstname,:lastname,:email,:mobileno)";
+  $sql = "INSERT INTO users (`firstname`, `lastname`, `email`, `mobileno`) VALUES ( :fname,:lname, :mail, :mobileno);";
   try {
     $db = getConnection();
     $stmt = $db->prepare($sql);
-    $stmt = bindParam("firstname", $user->firstname);
-    $stmt = bindParam("lastname", $user->lastname);
-    $stmt = bindParam("email", $user->email);
+    $stmt = bindParam("firstname", $user->fname);
+    $stmt = bindParam("lastname", $user->lname);
+    $stmt = bindParam("email", $user->mail);
     $stmt = bindParam("mobileno", $user->mobileno);
     $stmt->execute();
     $db = null;
