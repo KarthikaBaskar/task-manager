@@ -11,7 +11,7 @@ $app->run();
 
 //  https://task-manager-karthikabaskar-2.c9.io/api/users
 function getUsers() {
-$sql = "select * FROM users";
+  $sql = "select * FROM users";
   try {
     $db = getConnection();
     $stmt = mysqli_query($db, $sql);
@@ -27,16 +27,22 @@ $sql = "select * FROM users";
 
 // POST http://www.yourwebsite.com/api/updates
 function insertUser() {
-$sql = "INSERT INTO users VALUES ('4', 'shtal', 'pist', 'shital@fountaintechies.com', '10111213')";
-try {
-$db = getConnection();
-$stmt = $db->prepare($sql); 
-$stmt->execute();
-$db = null;
-echo json_encode($user);
-} catch(PDOException $e) {
-echo '{"error":{"text":'. $e->getMessage() .'}}';
-}
+  $request = Slim::getInstance()->request();
+  $user = json_decode($request->getBody());
+  $sql = "INSERT INTO users (firstName, lastName, email, mobileno) VALUES (:firstname,:lastname,:email,:mobileno)";
+  try {
+    $db = getConnection();
+    $stmt = $db->prepare($sql);
+    $stmt = bindParam("firstname", $user->firstname);
+    $stmt = bindParam("lastname", $user->lastname);
+    $stmt = bindParam("email", $user->email);
+    $stmt = bindParam("mobileno", $user->mobileno);
+    $stmt->execute();
+    $db = null;
+    echo json_encode($user);
+  } catch(PDOException $e) {
+    echo '{"error":{"text":'. $e->getMessage() .'}}';
+  }
 }
 
 ?>
