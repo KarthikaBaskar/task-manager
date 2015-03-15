@@ -5,7 +5,7 @@ require 'Slim/Slim.php';
 
 $app = new \Slim\Slim();
 
-$app->get('/users','getUsers');
+$app->get('/users', 'getUsers');
 $app->post('/user', 'insertUser');
 $app->run();
 
@@ -27,7 +27,7 @@ function getUsers() {
 
 // POST http://www.yourwebsite.com/api/updates
 function insertUser() {
-  $request = Slim::getInstance()->request();
+  $request = $app->request();
   $user = json_decode($request->getBody());
   $sql = "INSERT INTO users (`firstname`, `lastname`, `email`, `mobileno`) VALUES ( :fname,:lname, :mail, :mobileno);";
   try {
