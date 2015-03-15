@@ -37,10 +37,10 @@ function addUser() {
   try {
     $db = getConnection();
     $stmt = $db->prepare($sql);
-    $stmt->bindParam("firstname", $paramFName);
-    $stmt->bindParam("lastname", $paramLName);
-    $stmt->bindParam("email", $paramEmail);
-    $stmt->bindParam("mobileno", $paramMobNo);
+    //$stmt->bindParam("firstname", $paramFName);
+    //$stmt->bindParam("lastname", $paramLName);
+    //$stmt->bindParam("email", $paramEmail);
+    //$stmt->bindParam("mobileno", $paramMobNo);
     $stmt->execute();
     $db = null;
     echo json_encode($user);
